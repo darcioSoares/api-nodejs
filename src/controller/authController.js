@@ -1,11 +1,12 @@
 const express = require('express')
 const router = express.Router()
+//
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+//
 const authConfig = require("../../.env")
-
 const UserMongo = require('../models/user')
-
+//
 
 function generateToken(userId){
     return jwt.sign({id:userId}, authConfig.secret,{
@@ -15,23 +16,41 @@ function generateToken(userId){
 
 
 router.post('/register', async (req, res)=>{
-    const {email} = req.body
-
+    const data = {...req.body}
+        
     try{
-        if(await UserMongo.findOne({email}))
-            return res.status(400).json({error:"user already exists"})
 
-        const user = await UserMongo.create(req.body)
+        if(await UserMongo.findOne({email: data.email})){
+            let num = 1; throw num      
+        }
+        //obs validar senha maior 0 char        
+        if(!(data.password === data.authPassword)){
+            let num = 2; throw num
+        }  
+        delete data.authPassword 
+       
+        const user = await UserMongo.create(data)
+        if(!user){  
+            let num = 3; throw num
+        }   
 
-        user.password = undefined;              
+        user.password = undefined;        
         
         return res.status(201).send({user, token:generateToken(user._id)})
 
-    }catch(err){
-        return res.status(400).json({"error":"Registration failed"})
+    }catch(num){
 
+        if(num === 1)            
+            return res.status(400).json({"error":"user already exists"})      
+        if(num === 2)
+            return res.status(401).json({"error":"password and confirm password not check"})
+        if(num === 3)
+            return res.status(500).json({"error":"Register failed"})
+       
+        return res.status(401).json({"error":"data not informed"})    
     }
 })
+
 
 router.post('/authenticate', async (req,res)=>{
     const {email, password} = req.body
@@ -46,7 +65,6 @@ router.post('/authenticate', async (req,res)=>{
 
         user.password = undefined    
       
-
         res.status(200).send({user, token : generateToken(user._id)})
     
 })
