@@ -4,7 +4,7 @@ const router = express.Router()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 //
-const authConfig = require("../../.env")
+const authConfig = require("../../../.env")
 const UserMongo = require('../models/user')
 //
 

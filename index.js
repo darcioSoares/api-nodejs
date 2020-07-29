@@ -7,8 +7,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
 //carregano rotas
-require('./src/controller/authController')(app);
-require('./src/controller/projectController')(app);
+require('./app/src/controller/authController')(app);
+require('./app/src/controller/projectController')(app);
 
 
 app.listen(3003, (req,res)=>{
