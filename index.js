@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 //carregano rotas
 require('./app/src/controller/authController')(app);
 require('./app/src/controller/projectController')(app);
+require('./app/src/controller/recoverPasswordController')(app);
 
 
 app.listen(3003, (req,res)=>{
