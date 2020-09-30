@@ -6,7 +6,7 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:true}))
 
-//carregano rotas
+//carregando rotas
 require('./app/src/controller/authController')(app);
 require('./app/src/controller/projectController')(app);
 require('./app/src/controller/recoverPasswordController')(app);

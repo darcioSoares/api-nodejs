@@ -9,7 +9,7 @@ const templanteMail = require('../../mail/templateMail')
 
 
 router.post("/recover_password", async (req,res)=>{
-    let token = "teste"
+    let token = "teste 2 testando novamente"
     const {email} = req.body
 
     try {
@@ -39,6 +39,11 @@ router.post("/recover_password", async (req,res)=>{
     }
 
 
+})
+
+router.post("/confirm_token",function(req,res){
+
+    
 })
 
 module.exports = app => app.use("/recover", router)
