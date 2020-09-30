@@ -1,0 +1,12 @@
+module.exports = {
+    secret: "123",
+    db:"nameBanco",
+    
+    mail:{
+        host:"smtp.io",
+        port:00000,
+        user:"00000000000",
+        pass:"00000000000"
+    }
+    
+}
