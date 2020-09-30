@@ -69,5 +69,16 @@ router.post('/authenticate', async (req,res)=>{
     
 })
 
+router.get('/users', async function(req,res){
+
+    try {
+        const find = await UserMongo.find({}) 
+        res.send(find)
+
+    } catch (e) {
+        return res.status(500).json({"error":"database"})        
+    }
+})
+
 
 module.exports = app => { app.use('/auth', router) }
